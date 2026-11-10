@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+:root[data-theme="dark"] {
+  --bg: 11 14 20;
+  --panel: 17 22 31;
+  --line: 34 42 56;
+  --fg: 222 229 240;
+  --dim: 128 140 160;
+  --accent: 80 250 160;
+  --pink: 255 121 198;
+  --amber: 255 203 107;
+  --sky: 100 200 255;
+  --violet: 189 147 249;
+}
+:root[data-theme="light"] {
+  --bg: 248 249 252;
+  --panel: 255 255 255;
+  --line: 218 224 234;
+  --fg: 22 28 40;
+  --dim: 96 108 128;
+  --accent: 4 150 90;
+  --pink: 200 40 130;
+  --amber: 176 110 0;
+  --sky: 0 110 190;
+  --violet: 100 60 200;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: rgb(var(--accent) / 0.3); }
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgb(var(--line) / 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--line) / 0.35) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at 50% 30%, black 20%, transparent 75%);
+}
+.caret::after {
+  content: "▋";
+  margin-left: 2px;
+  color: rgb(var(--accent));
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.scan::before {
+  content: "";
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(transparent 50%, rgb(0 0 0 / 0.07) 50%);
+  background-size: 100% 4px;
+}
+.glow { box-shadow: 0 0 0 1px rgb(var(--accent) / 0.35), 0 0 40px -10px rgb(var(--accent) / 0.45); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+@media print {
+  .no-print { display: none !important; }
+}
+
+@page { size: A4; margin: 14mm 14mm 14mm 14mm; }
+@media print {
+  html, body { background: #fff !important; }
+}
